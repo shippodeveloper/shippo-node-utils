@@ -1,0 +1,23 @@
+{
+  "name": "shippo-node-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "eslint --ignore-path .gitignore ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shippodeveloper/shippo-node-utils.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shippodeveloper/shippo-node-utils/issues"
+  },
+  "homepage": "https://github.com/shippodeveloper/shippo-node-utils#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}
