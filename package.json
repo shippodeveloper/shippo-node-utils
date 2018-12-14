@@ -4,20 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --reporter spec",
     "pretest": "eslint --ignore-path .gitignore ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shippodeveloper/shippo-node-utils.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Shippo Developer",
+  "license": "MIT",
+  "email": "p.ptsp@shippo.vn",
   "bugs": {
     "url": "https://github.com/shippodeveloper/shippo-node-utils/issues"
   },
   "homepage": "https://github.com/shippodeveloper/shippo-node-utils#readme",
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "chai": "^4.2.0",
+    "eslint": "^5.10.0",
+    "eslint-plugin-mocha": "^5.2.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.5.1"
   }
 }
