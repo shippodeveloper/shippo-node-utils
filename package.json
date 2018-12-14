@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec",
-    "pretest": "eslint --ignore-path .gitignore ."
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -20,8 +19,6 @@
   "homepage": "https://github.com/shippodeveloper/shippo-node-utils#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^5.10.0",
-    "eslint-plugin-mocha": "^5.2.0",
     "mocha": "^5.2.0"
   },
   "dependencies": {

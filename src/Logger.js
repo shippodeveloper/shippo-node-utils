@@ -31,14 +31,18 @@ class Logger {
     errorOption.filename = `err-${errorOption.filename}`;
 
     let customFormat = format((info) => {
-      console.log(info);
       let prefix = util.format('[%s] [%s]', info.timestamp, info.level.toUpperCase());
       if (info[SPLAT]) {
-        info[MESSAGE] = util.format('%s %s %s', prefix, info['message'], JSON.stringify(info[SPLAT]));
-        // console.log(info);
-      } else {
-        info[MESSAGE] = util.format('%s %s', prefix, info['message']);
+        for(let ii = 0; ii < info[SPLAT].length; ++ii) {
+          if (info[SPLAT][ii] instanceof Error) {
+            info['message'] = util.format('%s %s' ,info['message'], info[SPLAT][ii].stack) ;
+          } else {
+            info['message'] = util.format('%s %s' ,info['message'], JSON.stringify(info[SPLAT][ii])) ;
+          }
+        }
       }
+
+      info[MESSAGE] = util.format('%s %s', prefix, info['message']);
 
       return info;
     });
@@ -54,7 +58,10 @@ class Logger {
         // new winston.transports.Console(),
         new (DailyRotateFile)(this.options)
       ],
-      exceptionHandlers: [new (DailyRotateFile)(errorOption)]
+      exceptionHandlers: [
+        // new (DailyRotateFile)(errorOption),
+        new winston.transports.File({ filename: 'logs/exceptions.log' })
+      ]
     });
   }
 }
