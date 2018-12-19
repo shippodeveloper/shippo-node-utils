@@ -3,7 +3,7 @@
  */
 
 let chai = require('chai');
-let String = require('./../').String;
+let String = require('./../').StringUtil;
 
 describe('Test string.', () => {
   it('normalize() happy case', () => {

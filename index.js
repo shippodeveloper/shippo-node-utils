@@ -1,7 +1,9 @@
 'use strict';
 
-let String = require('./src/String');
+let StringUtil = require('./src/StringUtil');
 let Timer = require('./src/Timer');
 let Logger = require('./src/Logger');
+let Expression = require('./src/Expression');
+let ObjectUtil = require('./src/ObjectUtil');
 
-module.exports = {String, Timer, Logger};
+module.exports = {StringUtil, Timer, Logger, Expression, ObjectUtil};
