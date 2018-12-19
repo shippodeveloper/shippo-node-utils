@@ -251,7 +251,7 @@ describe('Test expression:', () => {
         order: {
           weight: 1000,
           locationId: 567,
-          package: 'STC',
+          package: 'SCN',
           value1: 'Ok, im value1, what do u thing about a better name?'
         },
         merchant: {
