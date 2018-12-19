@@ -1,7 +1,7 @@
 [![NPM](https://nodei.co/npm/shippo-node-utils.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/shippo-node-utils/)
 
 # Shippo's NodeJS Util Module
-[![Build Status](https://travis-ci.org/shippodeveloper/shippo-sdk-php-client.svg?branch=master)](https://travis-ci.org/shippodeveloper/shippo-sdk-php-client)
+[![Build Status](https://travis-ci.org/shippodeveloper/shippo-node-utils.svg?branch=master)](https://travis-ci.org/shippodeveloper/shippo-node-utils)
 [![Issues](https://img.shields.io/github/issues/shippodeveloper/shippo-node-utils.svg?style=flat-square)](https://github.com/shippodeveloper/shippo-node-utils/issues)
 [![License](https://img.shields.io/github/license/shippodeveloper/shippo-node-utils.svg?style=flat-square)](https://github.com/shippodeveloper/shippo-node-utils/blob/master/LICENSE)
 
