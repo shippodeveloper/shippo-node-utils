@@ -144,7 +144,7 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
-    it('or condition $or', () => {
+    it('and condition $or', () => {
       let cond = {
         $or: [
           {'order.locationId': {$in: [1,2,3,4,5,6,7,8,9,10]}},
