@@ -1,7 +1,8 @@
 {
   "name": "shippo-node-utils",
   "version": "2.2.0",
-  "description": "",
+  "description": "Shippo nodejs utils module",
+  "keywords": ["shippo", "utils", "nodejs"],
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
