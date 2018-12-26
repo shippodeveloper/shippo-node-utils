@@ -2,10 +2,14 @@
   "name": "shippo-node-utils",
   "version": "2.2.0",
   "description": "Shippo nodejs utils module",
-  "keywords": ["shippo", "utils", "nodejs"],
+  "keywords": [
+    "shippo",
+    "utils",
+    "nodejs"
+  ],
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "./node_modules/mocha/bin/mocha test/*.test.js --reporter spec"
   },
   "repository": {
     "type": "git",
