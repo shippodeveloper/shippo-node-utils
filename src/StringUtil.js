@@ -65,5 +65,9 @@ let keepOnlyCharacter = (str, keepSpace = true) => {
     return result.join('');
 };
 
+let reverse = (str) => {
+    return str.split("").reverse().join("");
+}
 
-module.exports = {formatWithArray, normalize, unsign, trimDoubleSpace, keepOnlyCharacter};
+
+module.exports = {formatWithArray, normalize, unsign, trimDoubleSpace, keepOnlyCharacter, reverse};

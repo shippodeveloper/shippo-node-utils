@@ -73,4 +73,8 @@ describe('Test string.', () => {
 
       chai.assert.equal(actual, expect);
   });
+
+  it('Reverse a string', () => {
+    chai.assert.equal(String.reverse("apple"), "elppa", "reverse a string");
+  })
 });
