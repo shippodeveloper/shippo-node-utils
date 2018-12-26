@@ -17,8 +17,8 @@ describe('NumberUtil', () => {
       assert.equal(NumberUtil.isNumeric("-1.1"), true, '"-1.1" value is number');
       assert.equal(NumberUtil.isNumeric("0"), true, '"0" value is number');
       assert.equal(NumberUtil.isNumeric("013"), true, '"013" value is number');
-      assert.equal(NumberUtil.isNumeric(parseInt('012')), true, '"013" value is number');
-      assert.equal(NumberUtil.isNumeric(parseFloat('012')), true, '"013" value is number');
+      assert.equal(NumberUtil.isNumeric(parseInt('012')), true, '"012" value is number');
+      assert.equal(NumberUtil.isNumeric(parseFloat('012')), true, '"012" value is number');
     });
 
     it('special computer value', () => {
