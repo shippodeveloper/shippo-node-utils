@@ -32,7 +32,7 @@ describe('Test string.', () => {
     chai.assert.equal(actual, expect);
   });
 
-  it('unsign() will converts Vietnamese to English', () => {
+  it('unsign() will converts Vietnamese to unsign', () => {
       let expect = 'Hello world, we are den day';
       let actual = String.unsign('Hello world, we are đến đây');
 
