@@ -53,7 +53,7 @@ class Expression {
             /* điều kiện in có thể coi là một điều kiện or, vì vậy cách giải quyết là chuyển nó thành điều kiện or với một Expression */
             let inCond = Expression._makeOrConditionFromInArray(index, condition[index][subIndex]);
             this.and.push(new Expression(inCond));
-          } else if (['$neq', '$lt', '$lte', '$gt', '$gte'].indexOf(subIndex) !== -1) {
+          } else if (['$neq', '$lt', '$lte', '$gt', '$gte', "$regex"].indexOf(subIndex) !== -1) {
             /* các operator được định nghĩa */
             this.and.push([
               index, subIndex, condition[index][subIndex]
@@ -150,6 +150,11 @@ class Expression {
       }
       if (condition[1] === '$lte' && input[condition[0]] > condition[2]) {
         return false;
+      }
+
+      if (condition[1] === '$regex') {
+        let reg = new RegExp(condition[2], "g");
+        return reg.test(input[condition[0]]);
       }
 
       return true;

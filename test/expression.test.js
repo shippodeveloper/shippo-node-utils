@@ -99,6 +99,15 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
+    it('regex $regex', () => {
+      let cond = {'order.locationPath': {'$regex': "8.9.*" }};
+      let input = { order: { locationPath: "8.9.30"}};
+      let expression = new Expression(cond);
+      chai.assert.equal(expression.test(input), true, 'matching');
+      input.order.locationPath = "8.10.30";
+      chai.assert.equal(expression.test(input), false, 'correct not matching');
+    });
+
     it('in a collection $in', () => {
       let cond = {'order.id': {$in: [11,22,33,44,55,66,77,88,99,100]}};
       let input = { order: { id: 11}};
@@ -112,7 +121,7 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
-    it('or condition $and', () => {
+    it('and condition $and', () => {
       let cond = {
         $and: [
           {'order.locationId': {$in: [1,2,3,4,5,6,7,8,9,10]}},
@@ -144,7 +153,7 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
-    it('and condition $or', () => {
+    it('or condition $or', () => {
       let cond = {
         $or: [
           {'order.locationId': {$in: [1,2,3,4,5,6,7,8,9,10]}},
