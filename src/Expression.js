@@ -53,6 +53,10 @@ class Expression {
             /* điều kiện in có thể coi là một điều kiện or, vì vậy cách giải quyết là chuyển nó thành điều kiện or với một Expression */
             let inCond = Expression._makeOrConditionFromInArray(index, condition[index][subIndex]);
             this.and.push(new Expression(inCond));
+          } else if (subIndex === '$nin' && Array.isArray(condition[index][subIndex])) {
+            // not in ngược lại với in, nó là một tập hợp các điều kiện and với not equal giá trị trong mảng
+            let inCond = Expression._makeOrConditionFromNotInArray(index, condition[index][subIndex]);
+            this.and.push(new Expression(inCond));
           } else if (['$neq', '$lt', '$lte', '$gt', '$gte', "$regex"].indexOf(subIndex) !== -1) {
             /* các operator được định nghĩa */
             this.and.push([
@@ -169,6 +173,14 @@ class Expression {
       cond.push({[index]: inCondition[ii]});
     }
     return {$or: cond};
+  }
+
+  static _makeOrConditionFromNotInArray (index, inCondition) {
+    let cond = [];
+    for (let ii = 0 ; ii < inCondition.length; ++ii) {
+      cond.push({[index]: {$neq: inCondition[ii]}});
+    }
+    return {$and: cond};
   }
 }
 

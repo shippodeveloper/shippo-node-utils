@@ -121,6 +121,23 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
+    it('not in a collection $nin', () => {
+      let cond = {'order.id': {$nin: [11,22,33,44,55,66,77,88,99,100]}};
+      let input = { order: { id: 11}};
+      let expression = new Expression(cond);
+      chai.assert.equal(expression.test(input), false, 'correct 11 in array');
+      input.order.id = 100;
+      chai.assert.equal(expression.test(input), false, 'correct 100 in array');
+      input.order.id = 55;
+      chai.assert.equal(expression.test(input), false, 'correct 55 in array');
+      input.order.id = 10;
+      chai.assert.equal(expression.test(input), true, 'correct 10 not in array');
+      input.order.id = 12;
+      chai.assert.equal(expression.test(input), true, 'correct 12 not in array');
+      input.order.id = 5900;
+      chai.assert.equal(expression.test(input), true, 'correct 5900 not in array');
+    });
+
     it('and condition $and', () => {
       let cond = {
         $and: [
