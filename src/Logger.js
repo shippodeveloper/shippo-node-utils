@@ -57,10 +57,6 @@ class Logger {
       transports: [
         // new winston.transports.Console(),
         new (DailyRotateFile)(this.options)
-      ],
-      exceptionHandlers: [
-        // new (DailyRotateFile)(errorOption),
-        new winston.transports.File({ filename: 'logs/exceptions.log' })
       ]
     });
   }

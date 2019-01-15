@@ -170,6 +170,34 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
+    it('and condition in same field', () => {
+      let cond = {
+        $and: [
+          {'order.weight': {$gte: 0}},
+          {'order.weight': {$lte: 5000}},
+        ]};
+
+      let input = {
+        order: {
+          locationId: 1,
+          weight: 5000,
+          package: 'STC'
+        },
+        merchant: {
+          groupId: 12
+        }
+      };
+
+      let expression = new Expression(cond);
+      chai.assert.equal(expression.test(input), true, `true with order.weight = ${input.order.weight}`);
+      input.order.weight = 4500;
+      chai.assert.equal(expression.test(input), true, `true with order.weight = ${input.order.weight}`);
+      input.order.weight = -0.1;
+      chai.assert.equal(expression.test(input), false, `fail with order.weight = ${input.order.weight}`);
+      input.order.weight = 5001;
+      chai.assert.equal(expression.test(input), false, `fail with order.weight = ${input.order.weight}`);
+    });
+
     it('or condition $or', () => {
       let cond = {
         $or: [
