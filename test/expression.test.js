@@ -108,6 +108,24 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false, 'correct not matching');
     });
 
+    it('eval $eval', () => {
+      Date.prototype.addDays = function(days) {
+        let date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+
+      let input= {merchant: {createdAt: (new Date()).addDays(10)}};
+      let cond = {'merchant.createdAt': { $gte: { $eval: 'new Date()'} }};
+
+      let expression = new Expression(cond);
+      chai.assert.equal(expression.test(input), true, 'merchant.createdAt greater than cur date');
+
+      cond['merchant.createdAt'] = { $lte: { $eval: 'new Date()'} };
+      expression = new Expression(cond);
+      chai.assert.equal(expression.test(input), false, 'merchant.createdAt not letter than cur date');
+    });
+
     it('in a collection $in', () => {
       let cond = {'order.id': {$in: [11,22,33,44,55,66,77,88,99,100]}};
       let input = { order: { id: 11}};

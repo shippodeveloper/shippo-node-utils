@@ -57,7 +57,11 @@ class Expression {
             // not in ngược lại với in, nó là một tập hợp các điều kiện and với not equal giá trị trong mảng
             let inCond = Expression._makeOrConditionFromNotInArray(index, condition[index][subIndex]);
             this.and.push(new Expression(inCond));
-          } else if (['$neq', '$lt', '$lte', '$gt', '$gte', "$regex"].indexOf(subIndex) !== -1) {
+          } else if (subIndex === '$eval') {//eval
+            this.and.push([
+              index, '$eq', eval(condition[index][subIndex])
+            ]);
+          } else if (['$neq', '$lt', '$lte', '$gt', '$gte', '$regex'].indexOf(subIndex) !== -1) {
             /* các operator được định nghĩa */
             this.and.push([
               index, subIndex, condition[index][subIndex]
@@ -126,6 +130,16 @@ class Expression {
     return (/boolean|number|string/).test(typeof mixVar);
   }
 
+  static _isEval(mixVar) {
+    if(typeof mixVar === 'object') {
+      if (mixVar['$eval'] && Expression._isScalar(mixVar.$eval)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   /**
    *
    * @param condition
@@ -137,6 +151,10 @@ class Expression {
     if (condition instanceof Expression) {
       return condition.test(input);
     } else if (Array.isArray(condition) && condition.length === 3) {
+      if (Expression._isEval(condition[2])) {
+        condition[2] = eval(condition[2].$eval);
+      }
+
       if (condition[1] === '$eq' && input[condition[0]] != condition[2]) {
         return false;
       }
