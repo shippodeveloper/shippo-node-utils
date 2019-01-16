@@ -131,7 +131,7 @@ class Expression {
   }
 
   static _isEval(mixVar) {
-    if(typeof mixVar === 'object') {
+    if(mixVar && typeof mixVar === 'object') {
       if (mixVar['$eval'] && Expression._isScalar(mixVar.$eval)) {
         return true;
       }
