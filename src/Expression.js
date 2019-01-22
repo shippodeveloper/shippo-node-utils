@@ -155,7 +155,7 @@ class Expression {
         condition[2] = eval(condition[2].$eval);
       }
 
-      if (!input[condition[0]]) {
+      if (input[condition[0]] === undefined) {
         return false;
       }
 
