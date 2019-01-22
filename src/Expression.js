@@ -155,6 +155,10 @@ class Expression {
         condition[2] = eval(condition[2].$eval);
       }
 
+      if (!input[condition[0]]) {
+        return false;
+      }
+
       if (condition[1] === '$eq' && input[condition[0]] != condition[2]) {
         return false;
       }
