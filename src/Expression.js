@@ -127,6 +127,9 @@ class Expression {
    * @private
    */
   static _isScalar(mixVar) {
+    if (mixVar === null) {
+      return true;
+    }
     return (/boolean|number|string/).test(typeof mixVar);
   }
 

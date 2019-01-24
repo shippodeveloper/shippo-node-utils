@@ -188,6 +188,27 @@ describe('Test expression:', () => {
       chai.assert.equal(expression.test(input), false);
     });
 
+    it('compare with null value', () => {
+      let cond = {
+        'order.locationPath': null
+      };
+
+      let input = {
+        order: {
+          locationPath: null,
+          weight: 5000,
+          package: 'STC'
+        },
+        merchant: {
+          groupId: 12
+        }
+      };
+      let expression = new Expression(cond);
+      chai.assert.equal(expression.test(input), true);
+      input.order.locationPath = 10;
+      chai.assert.equal(expression.test(input), false);
+    });
+
     it('and condition in same field', () => {
       let cond = {
         $and: [
