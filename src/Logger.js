@@ -58,7 +58,7 @@ class Logger {
         customFormat()
       ),
       transports: [
-        // new winston.transports.Console(),
+        new winston.transports.Console(),
         new (DailyRotateFile)(this.options),
         new (DailyRotateFile)(this.optionsError)
       ]
