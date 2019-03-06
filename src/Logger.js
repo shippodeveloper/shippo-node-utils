@@ -21,6 +21,9 @@ class Logger {
       maxSize: '20m',
       maxFiles: '14d'
     }, config);
+    this.optionsError = {...this.options};
+    this.optionsError.filename = `ERR-${this.optionsError.filename}`;
+    this.optionsError.level = 'error';
   }
 
   createLogger (channel) {
@@ -55,8 +58,9 @@ class Logger {
         customFormat()
       ),
       transports: [
-        // new winston.transports.Console(),
-        new (DailyRotateFile)(this.options)
+        new winston.transports.Console(),
+        new (DailyRotateFile)(this.options),
+        new (DailyRotateFile)(this.optionsError)
       ]
     });
   }
