@@ -21,6 +21,7 @@ class Logger {
       maxSize: '20m',
       maxFiles: '14d'
     }, config);
+    this.optionsForLogAll = {...this.options} 
   }
 
   createLogger (channel) {
@@ -56,7 +57,8 @@ class Logger {
       ),
       transports: [
         // new winston.transports.Console(),
-        new (DailyRotateFile)(this.options)
+        new (DailyRotateFile)(this.options),
+        new (DailyRotateFile)(this.optionsForLogAll)
       ]
     });
   }
