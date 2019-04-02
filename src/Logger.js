@@ -2,7 +2,7 @@
  * Copyright (c) 2018 by Lưu Hiếu <tronghieu.luu@gmail.com>
  */
 'use strict';
-
+require('events').EventEmitter.defaultMaxListeners = 100;
 const winston = require('winston');
 const util = require("util");
 const format = winston.format;
@@ -21,6 +21,7 @@ class Logger {
       maxSize: '20m',
       maxFiles: '14d'
     }, config);
+    this.optionsForLogAll = {...this.options} 
     this.optionsError = {...this.options};
     this.optionsError.filename = `ERR-${this.optionsError.filename}`;
     this.optionsError.level = 'error';
@@ -60,7 +61,13 @@ class Logger {
       transports: [
         new winston.transports.Console(),
         new (DailyRotateFile)(this.options),
+        new (DailyRotateFile)(this.optionsForLogAll),
         new (DailyRotateFile)(this.optionsError)
+      ],
+      exceptionHandlers: [
+        new winston.transports.Console(),
+        new (DailyRotateFile)(this.optionsForLogAll),
+        new (DailyRotateFile)(this.optionsError),
       ]
     });
   }
