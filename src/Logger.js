@@ -2,7 +2,7 @@
  * Copyright (c) 2018 by Lưu Hiếu <tronghieu.luu@gmail.com>
  */
 'use strict';
-
+require('events').EventEmitter.defaultMaxListeners = 100;
 const winston = require('winston');
 const util = require("util");
 const format = winston.format;
@@ -63,6 +63,11 @@ class Logger {
         new (DailyRotateFile)(this.options),
         new (DailyRotateFile)(this.optionsForLogAll),
         new (DailyRotateFile)(this.optionsError)
+      ],
+      exceptionHandlers: [
+        new winston.transports.Console(),
+        new (DailyRotateFile)(this.optionsForLogAll),
+        new (DailyRotateFile)(this.optionsError),
       ]
     });
   }
