@@ -21,10 +21,12 @@ class Logger {
       maxSize: '20m',
       maxFiles: '14d'
     }, config);
-    this.optionsForLogAll = {...this.options} 
+    this.optionsForLogAll = {...this.options};
     this.optionsError = {...this.options};
     this.optionsError.filename = `ERR-${this.optionsError.filename}`;
     this.optionsError.level = 'error';
+    this.optionsExceptions = {...this.options};
+    this.optionsExceptions.filename = `EXCEPTIONS-${this.optionsExceptions.filename}`;
   }
 
   createLogger (channel) {
@@ -67,7 +69,7 @@ class Logger {
       exceptionHandlers: [
         new winston.transports.Console(),
         new (DailyRotateFile)(this.optionsForLogAll),
-        new (DailyRotateFile)(this.optionsError),
+        new (DailyRotateFile)(this.optionsExceptions)
       ]
     });
   }
