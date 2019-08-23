@@ -26,6 +26,9 @@ class Configs {
 
   async getAnnouncements(posKey) {
     let cacheConfigs = await this.getCache("announcements");
+    if(typeof cacheConfigs === 'string') {
+      cacheConfigs = JSON.parse(cacheConfigs);
+    }
     for (let ii = 0; ii < cacheConfig.length; ii++) {
       if (cacheConfigs[ii].posKey === posKey) {
         return cacheConfigs[ii];
@@ -39,6 +42,9 @@ class Configs {
    */
   async getBusinessConfigs(configKeys) {
     let cacheConfigs = await this.getCache("businessConfigs");
+    if(typeof cacheConfigs === 'string') {
+      cacheConfigs = JSON.parse(cacheConfigs);
+    }
     return cacheConfigs.filter(config => configKeys.includes(config.config_key))
   }
 
@@ -50,6 +56,10 @@ class Configs {
   async validateMobile(mobile, location) {
     let result = { status: false, message: 'Đầu số chưa được hỗ trợ' };
     let cacheConfigs = await this.getCache("businessConfigs")
+
+    if(typeof cacheConfigs === 'string') {
+      cacheConfigs = JSON.parse(cacheConfigs);
+    }
 
     mobile = mobile ? mobile.replace(/\D/g, '').replace(/^84|^\+84/, 0) : mobile;
     location = location ? location.replace(/\ /gm, "").toUpperCase() : location;
@@ -87,6 +97,9 @@ class Configs {
    */
   async getLocationsById(id) {
     let locations = await this.getCache("locations");
+    if(typeof locations === 'string') {
+      locations = JSON.parse(locations);
+    }
     return locations.find(location => (location.id == id && location.is_deleted == 0))
   }
 
@@ -96,6 +109,9 @@ class Configs {
    */
   async getLocationsByParentId(parentId) {
     let locations = await this.getCache("locations");
+    if(typeof locations === 'string') {
+      locations = JSON.parse(locations);
+    }
     return locations.filter(location => location.parent_id == parentId)
   }
 
@@ -103,8 +119,11 @@ class Configs {
    * 
    * @param {String} parentPath exp: "8.9"
    */
-  async getLocationsByParentPath(parentPath, locations) {
+  async getLocationsByParentPath(parentPath) {
     let locations = await this.getCache("locations");
+    if(typeof locations === 'string') {
+      locations = JSON.parse(locations);
+    }
     let regParentPath = new RegExp(parentPath + ".*");
     return locations.filter(location => {
       return location.lineage && location.lineage.match(regParentPath)
