@@ -1,9 +1,9 @@
 class Configs {
-  constructor() {
-    this.getConfigs(config);
+  constructor(configs) {
+    this.getConfigs(configs);
   }
 
-  getConfigs() {
+  getConfigs(configs) {
     throw new Error("This function must be implement")
   }
 
