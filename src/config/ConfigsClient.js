@@ -45,7 +45,7 @@ class ConfigsClient extends Configs {
   async getCache(key) {
     let value = localStorage.getItem(key);
     if (!value) throw new Error("Key not found!");
-    return JSON.parse(value);
+    return value;
   }
 
   /**
@@ -62,5 +62,3 @@ class ConfigsClient extends Configs {
 }
 
 module.exports = ConfigsClient
-
-let aaa = new ConfigsClient();
