@@ -1,6 +1,6 @@
 class Configs {
   constructor() {
-    this.getConfigs();
+    this.getConfigs(config);
   }
 
   getConfigs() {
