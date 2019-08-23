@@ -27,7 +27,9 @@
     "mocha": "^5.2.0"
   },
   "dependencies": {
+    "consul": "^0.35.0",
     "flat": "^4.1.0",
+    "node-cache": "^4.2.1",
     "winston": "^3.1.0",
     "winston-daily-rotate-file": "^3.5.1"
   }
