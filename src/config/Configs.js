@@ -1,3 +1,5 @@
+const StringUtil = require('../StringUtil');
+
 class Configs {
   constructor(configs) {
     this.getConfigs(configs);
@@ -26,7 +28,7 @@ class Configs {
 
   async getAnnouncements(posKey) {
     let cacheConfigs = await this.getCache("announcements");
-    if(typeof cacheConfigs === 'string') {
+    if (typeof cacheConfigs === 'string') {
       cacheConfigs = JSON.parse(cacheConfigs);
     }
     for (let ii = 0; ii < cacheConfig.length; ii++) {
@@ -42,7 +44,7 @@ class Configs {
    */
   async getBusinessConfigs(configKeys) {
     let cacheConfigs = await this.getCache("businessConfigs");
-    if(typeof cacheConfigs === 'string') {
+    if (typeof cacheConfigs === 'string') {
       cacheConfigs = JSON.parse(cacheConfigs);
     }
     return cacheConfigs.filter(config => configKeys.includes(config.config_key))
@@ -50,19 +52,58 @@ class Configs {
 
   /**
    * 
-   * @param {Number} phone Số điện thoại cần kiểm tra
-   * @param {String} location Tên quốc gia để kiểm tra số điện thoại
+   * @param {string} configKey Danh sách các config key
    */
-  async validateMobile(mobile, location) {
-    let result = { status: false, message: 'Đầu số chưa được hỗ trợ' };
+  async getBusinessConfigByKey(configKey) {
+    let cacheConfigs = await this.getCache("businessConfigs");
+    if (typeof cacheConfigs === 'string') {
+      cacheConfigs = JSON.parse(cacheConfigs);
+    }
+    return cacheConfigs.find(config => config.config_key == configKey);
+  }
+  /**
+   * 
+   * @param {string} name
+   * @param {string} level
+   * @param {number} parent_id
+   */
+  async getLocationByName(name, level, parent_id = null) {
+    if (!name || !level) return null;
+    let locations = await this.getCache("locations");
+    if (typeof locations === 'string') {
+      locations = JSON.parse(locations);
+    }
+
+    let nameNormalize = StringUtil.keepOnlyCharacter(StringUtil.normalize(name), false);
+
+    let location = locations.find(location => (StringUtil.keepOnlyCharacter(StringUtil.normalize(location.name), false) == nameNormalize && location.level == level && (parent_id === null || location.parent_id == parent_id)));
+    if (location) return location;
+
+    //db chỉ lưu name location mà không lưu tiền tố tỉnh/tp, quận/huyện, thị xã (ngoại trừ mấy quận HCM)
+    //name được truyền lên hoàn toàn có thể chứa các tiền tố trên. Nếu có thì bỏ đi, sau đấy get lại theo name
+    let prefixes = ['tinh', 'thanhpho', 'tp', 'quan', 'huyen', 'thixa'];
+    for (let pre of prefixes) {
+      if (nameNormalize.indexOf(pre) === 0) {
+        nameNormalize = nameNormalize.replace(pre, '');
+        let location = locations.find(location => (StringUtil.keepOnlyCharacter(StringUtil.normalize(location.name), false) == nameNormalize && location.level == level && (parent_id === null || location.parent_id == parent_id)));
+        if (location) return location;
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param {Number} phone Số điện thoại cần kiểm tra
+   */
+  async validateMobile(mobile) {
+    let result = { status: false, message: 'The first phone number is not support' };
     let cacheConfigs = await this.getCache("businessConfigs")
 
-    if(typeof cacheConfigs === 'string') {
+    if (typeof cacheConfigs === 'string') {
       cacheConfigs = JSON.parse(cacheConfigs);
     }
 
     mobile = mobile ? mobile.replace(/\D/g, '').replace(/^84|^\+84/, 0) : mobile;
-    location = location ? location.replace(/\ /gm, "").toUpperCase() : location;
 
     if (!mobile) return result
     if (isNaN(mobile)) {
@@ -71,7 +112,7 @@ class Configs {
 
     let mobile_prefix;
     cacheConfigs.map(config => {
-      if (config.config_key === `${location}_VALID_MOBILE`) {
+      if (config.config_key === `VALID_MOBILE`) {
         mobile_prefix = config;
       }
     })
@@ -86,7 +127,7 @@ class Configs {
         result.status = true;
         return result;
       }
-      result.message = 'Độ dài số điện thoại không hợp lệ';
+      result.message = 'The length of phone number is invalid';
     }
     return result
   }
@@ -95,12 +136,21 @@ class Configs {
    * 
    * @param {Number} id
    */
-  async getLocationsById(id) {
+  async getLocationById(id) {
     let locations = await this.getCache("locations");
-    if(typeof locations === 'string') {
+    if (typeof locations === 'string') {
       locations = JSON.parse(locations);
     }
     return locations.find(location => (location.id == id && location.is_deleted == 0))
+  }
+
+  async getLocations() {
+    let locations = await this.getCache("locations");
+    if (typeof locations === 'string') {
+      locations = JSON.parse(locations);
+    }
+
+    return locations;
   }
 
   /**
@@ -109,7 +159,7 @@ class Configs {
    */
   async getLocationsByParentId(parentId) {
     let locations = await this.getCache("locations");
-    if(typeof locations === 'string') {
+    if (typeof locations === 'string') {
       locations = JSON.parse(locations);
     }
     return locations.filter(location => location.parent_id == parentId)
@@ -121,7 +171,7 @@ class Configs {
    */
   async getLocationsByParentPath(parentPath) {
     let locations = await this.getCache("locations");
-    if(typeof locations === 'string') {
+    if (typeof locations === 'string') {
       locations = JSON.parse(locations);
     }
     let regParentPath = new RegExp(parentPath + ".*");

@@ -14,9 +14,9 @@ class ConfigsClient extends Configs {
   }
 
   checkVersion(consul) {
-    consul.kv.get("version", (errorGetVersion, result) => {
+    consul.kv.get("ConfigVersion", (errorGetVersion, result) => {
       if (errorGetVersion) throw errorGetVersion;
-      if (result.Value !== localStorage.getItem("versionConfig")) {
+      if (result.Value !== localStorage.getItem("ConfigVersion")) {
         this.fetchKeys(consul)
       }
     })
