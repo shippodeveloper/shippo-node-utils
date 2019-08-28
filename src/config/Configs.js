@@ -47,7 +47,7 @@ class Configs {
     if (typeof cacheConfigs === 'string') {
       cacheConfigs = JSON.parse(cacheConfigs);
     }
-    return cacheConfigs.filter(config => configKeys.includes(config.config_key))
+    return cacheConfigs.filter(config => configKeys.includes(config.configKey))
   }
 
   /**
@@ -59,7 +59,7 @@ class Configs {
     if (typeof cacheConfigs === 'string') {
       cacheConfigs = JSON.parse(cacheConfigs);
     }
-    return cacheConfigs.find(config => config.config_key == configKey);
+    return cacheConfigs.find(config => config.configKey == configKey);
   }
   /**
    * 
@@ -112,7 +112,7 @@ class Configs {
 
     let mobile_prefix;
     cacheConfigs.map(config => {
-      if (config.config_key === `VALID_MOBILE`) {
+      if (config.configKey === `VALID_MOBILE`) {
         mobile_prefix = config;
       }
     })
