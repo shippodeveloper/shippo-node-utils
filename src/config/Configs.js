@@ -47,6 +47,8 @@ class Configs {
     if (typeof cacheConfigs === 'string') {
       cacheConfigs = JSON.parse(cacheConfigs);
     }
+
+    if (!configKeys) return cacheConfigs;
     return cacheConfigs.filter(config => configKeys.includes(config.configKey))
   }
 
