@@ -9,5 +9,6 @@ let NumberUtil = require('./src/NumberUtil');
 let Randomizer = require('./src/Randomizer');
 let ConfigsClient = require('./src/config/ConfigsClient');
 let ConfigsNode = require('./src/config/ConfigsNode');
+let Configs = require('./src/config/Configs');
 
-module.exports = {ConfigsClient, ConfigsNode, StringUtil, Timer, Logger, Expression, ObjectUtil , NumberUtil, Randomizer};
+module.exports = { Configs, ConfigsClient, ConfigsNode, StringUtil, Timer, Logger, Expression, ObjectUtil, NumberUtil, Randomizer };
