@@ -181,6 +181,15 @@ class Configs {
       return location.lineage && location.lineage.match(regParentPath)
     })
   }
+
+  async getAppState() {
+    let appState = await this.getCache("appState");
+    if (typeof appState === 'string') {
+      appState = JSON.parse(appState);
+    }
+
+    return appState;
+  }
 }
 
 module.exports = Configs;
