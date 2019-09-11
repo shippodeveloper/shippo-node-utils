@@ -727,11 +727,7 @@ class Configs {
 
     //Tổng hợp total fee lưu trên order
     this.calculateOrderTotalFee(order, fees);
-    return {
-      totalFee: order.totalFee,
-      totalMerchantFee: order.totalMerchantFee,
-      fees: fees
-    };
+    return Object.assign(order, { fees: fee });
   }
 }
 
