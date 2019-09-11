@@ -267,7 +267,7 @@ class Configs {
       serviceChargeFormula = JSON.parse(serviceChargeFormula);
       serviceChargeFormulas = serviceChargeFormulas.concat(serviceChargeFormula);
     });
-    
+
     return serviceChargeFormulas;
   }
 
@@ -414,6 +414,14 @@ class Configs {
     if (!policies || policies.length === 0) {
       throw new ReferenceError('Not found any policy setting');
     }
+
+    //do sort asc của sql null là cuối, nhưng của linq null là đầu. nên phải thêm đoạn code này!
+    if (policies.length > 1 && policies[0].mpsId === null) {
+      policies.push(policies[0]);
+      policies.shift();
+    }
+    //end-region
+
     return policies[0]; //first policy found
   };
 
