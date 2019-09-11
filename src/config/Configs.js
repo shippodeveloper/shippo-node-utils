@@ -727,7 +727,7 @@ class Configs {
 
     //Tổng hợp total fee lưu trên order
     this.calculateOrderTotalFee(order, fees);
-    return Object.assign(order, { fees: fee });
+    return Object.assign(order, { fees: fees });
   }
 }
 
