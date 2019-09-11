@@ -2,16 +2,21 @@ const Configs = require('./Configs');
 const NodeCache = require('node-cache');
 
 class ConfigsNode extends Configs {
-  constructor(configs) {
-    super(configs);
+  constructor(configs, businessConfigPath) {
+    super(configs, businessConfigPath);
     this.cache = new NodeCache();
   };
 
-  getConfigs(configs) {
+  getConfigs(configs, businessConfigPath) {
     const consul = require('consul')(configs);
-    consul.kv.keys('', (err, keys) => {
+    consul.kv.keys(businessConfigPath, (err, keys) => {
       if (err) throw err;
-      keys.forEach(key => {
+
+      for (let ii = 0; ii < keys.length; ii++) {
+        const key = keys[ii];
+
+        if (key.slice(-1) === '/') continue;
+
         let watch = consul.watch({
           method: consul.kv.get,
           options: { key },
@@ -19,13 +24,16 @@ class ConfigsNode extends Configs {
         });
 
         watch.on('change', (data, res) => {
-          this.setCache(data.Key, data.Value);
+          if (data) {
+            this.setCache(data.Key, data.Value);
+          }
         });
 
         watch.on('error', function (err) {
           console.log('consul_watch_error:', err);
         });
-      });
+      }
+
     });
   }
 
@@ -46,6 +54,19 @@ class ConfigsNode extends Configs {
    */
   async setCache(key, value) {
     return this.cache.set(key, value);
+  }
+
+  /**
+   * 
+   * @param {String} path 
+   * @return {Array}
+   */
+  async getKeys(path) {
+    let keys = this.cache.keys();
+    if (path) {
+      keys = keys.filter(key => (key.indexOf(path) === 0))
+    }
+    return keys;
   }
 }
 
