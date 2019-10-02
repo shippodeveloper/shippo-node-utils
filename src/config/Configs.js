@@ -80,6 +80,33 @@ class Configs {
     }
     return cacheConfigs.find(config => config.configKey == configKey);
   }
+
+  /**
+   * 
+   * @param {Array} key Danh sách các key
+   */
+  async getQuickFilterLinks(keys) {
+    let quickFilterLinks = await this.getCache(this.businessConfigPath + "quickFilterLinks");
+    if (typeof quickFilterLinks === 'string') {
+      quickFilterLinks = JSON.parse(quickFilterLinks);
+    }
+
+    if (!keys) return quickFilterLinks;
+    return quickFilterLinks.filter(quickFilterLink => keys.includes(quickFilterLink.key))
+  }
+
+  /**
+   * 
+   * @param {string} key 
+   */
+  async getQuickFilterLinkByKey(key) {
+    let quickFilterLinks = await this.getCache(this.businessConfigPath + "quickFilterLinks");
+    if (typeof quickFilterLinks === 'string') {
+      quickFilterLinks = JSON.parse(quickFilterLinks);
+    }
+    return quickFilterLinks.find(quickFilterLink => quickFilterLink.key == key);
+  }
+
   /**
    * 
    * @param {string} name

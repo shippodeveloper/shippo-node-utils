@@ -90,7 +90,7 @@ let merchant = {
 };
 
 setTimeout(() => {
-  configs.estimate(data, merchant).then(res =>{
+  configs.getQuickFilterLinkByKey('DELIVERY_ORDER_LONG_TIME_NO_PICKUP').then(res =>{
     console.log(res);
   }
   // configs.getServiceChargeFormulas(res=>{
