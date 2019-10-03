@@ -85,26 +85,26 @@ class Configs {
    * 
    * @param {Array} key Danh sách các key
    */
-  async getQuickFilterLinks(keys) {
-    let quickFilterLinks = await this.getCache(this.businessConfigPath + "quickFilterLinks");
-    if (typeof quickFilterLinks === 'string') {
-      quickFilterLinks = JSON.parse(quickFilterLinks);
+  async getManyQuickFilterOrder(keys) {
+    let manyQuickFilterOrder = await this.getCache(this.businessConfigPath + "quickFilterOrder");
+    if (typeof manyQuickFilterOrder === 'string') {
+      manyQuickFilterOrder = JSON.parse(manyQuickFilterOrder);
     }
 
-    if (!keys) return quickFilterLinks;
-    return quickFilterLinks.filter(quickFilterLink => keys.includes(quickFilterLink.key))
+    if (!keys) return manyQuickFilterOrder;
+    return manyQuickFilterOrder.filter(quickFilterOrder => keys.includes(quickFilterOrder.key))
   }
 
   /**
    * 
    * @param {string} key 
    */
-  async getQuickFilterLinkByKey(key) {
-    let quickFilterLinks = await this.getCache(this.businessConfigPath + "quickFilterLinks");
-    if (typeof quickFilterLinks === 'string') {
-      quickFilterLinks = JSON.parse(quickFilterLinks);
+  async getQuickFilterOrderByKey(key) {
+    let manyQuickFilterOrder = await this.getCache(this.businessConfigPath + "quickFilterOrder");
+    if (typeof manyQuickFilterOrder === 'string') {
+      manyQuickFilterOrder = JSON.parse(manyQuickFilterOrder);
     }
-    return quickFilterLinks.find(quickFilterLink => quickFilterLink.key == key);
+    return manyQuickFilterOrder.find(quickFilterOrder => quickFilterOrder.key == key);
   }
 
   /**
