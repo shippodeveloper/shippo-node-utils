@@ -9,6 +9,7 @@ class ConfigsNode extends Configs {
 
   getConfigs(configs, businessConfigPath) {
     const consul = require('consul')(configs);
+    this.consul = consul;
     consul.kv.keys(businessConfigPath, (err, keys) => {
       if (err) throw err;
 
@@ -67,6 +68,20 @@ class ConfigsNode extends Configs {
       keys = keys.filter(key => (key.indexOf(path) === 0))
     }
     return keys;
+  }
+
+  /**
+   * 
+   * @param {String} key 
+   * @param {*} value 
+   */
+  async setKey(key, value) {
+    return new Promise((resolve, reject) => {
+      this.consul.kv.set(this.businessConfigPath + key, value, function (err, result) {
+        if (err) reject(err);
+        resolve(result);
+      });
+    })
   }
 }
 
