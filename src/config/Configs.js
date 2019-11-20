@@ -248,6 +248,10 @@ class Configs {
     await this.setKey('popup', value);
   }
 
+  async setAnnouncement(value) {
+    await this.setKey('announcement', value);
+  }
+
   async getConfigVersion() {
     let configVersion = await this.getCache(this.businessConfigPath + "ConfigVersion");
     if (typeof configVersion === 'string') {
