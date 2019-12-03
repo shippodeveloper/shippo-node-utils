@@ -265,6 +265,15 @@ class Configs {
     let configVersion = await this.getConfigVersion();
     await this.setKey('ConfigVersion', String(configVersion + 1))
   }
+
+  async getUserAllowUpdateNotification() {
+    let userAllowUpdateNotification = await this.getCache(this.businessConfigPath + "userAllowUpdateNotification");
+    if (typeof configVersion === 'string') {
+      userAllowUpdateNotification = JSON.parse(userAllowUpdateNotification);
+    }
+
+    return userAllowUpdateNotification;
+  }
 }
 
 module.exports = Configs;
