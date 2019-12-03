@@ -268,7 +268,7 @@ class Configs {
 
   async getUserAllowUpdateNotification() {
     let userAllowUpdateNotification = await this.getCache(this.businessConfigPath + "userAllowUpdateNotification");
-    if (typeof configVersion === 'string') {
+    if (typeof userAllowUpdateNotification === 'string') {
       userAllowUpdateNotification = JSON.parse(userAllowUpdateNotification);
     }
 
