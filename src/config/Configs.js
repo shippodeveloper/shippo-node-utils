@@ -274,6 +274,15 @@ class Configs {
 
     return userAllowUpdateNotification;
   }
+
+  async getTemplatePrintSticker(username) {
+    let configTemplatePrintSticker = await this.getCache(this.businessConfigPath + "configTemplatePrintSticker");
+    configTemplatePrintSticker = JSON.parse(configTemplatePrintSticker)
+
+    if (!username) return configTemplatePrintSticker;
+
+    return configTemplatePrintSticker.username;
+  }
 }
 
 module.exports = Configs;
