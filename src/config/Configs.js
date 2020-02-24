@@ -208,6 +208,15 @@ class Configs {
     return locations;
   }
 
+  async getBestExpressRiderIds() {
+    let bestExpressRiderIds = await this.getCache(this.businessConfigPath + "bestExpressRiderIds");
+    if (typeof bestExpressRiderIds === 'string') {
+      bestExpressRiderIds = JSON.parse(bestExpressRiderIds);
+    }
+
+    return bestExpressRiderIds;
+  }
+
   /**
    * 
    * @param {Number} parentId 
