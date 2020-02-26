@@ -217,6 +217,15 @@ class Configs {
     return bestExpressRiderIds;
   }
 
+  async getRateCNY_VND() {
+    let rate_CNY_VND = await this.getCache(this.businessConfigPath + "cny_vnd");
+    if (typeof rate_CNY_VND === 'string') {
+      rate_CNY_VND = JSON.parse(rate_CNY_VND);
+    }
+
+    return rate_CNY_VND;
+  }
+
   /**
    * 
    * @param {Number} parentId 
